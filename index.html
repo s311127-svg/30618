@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>林宜蓁 | Yi-Chen Lin — Personal Portfolio</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;1,800&family=Syne:wght@700;800&family=Noto+Sans+TC:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* ============================================================
+       DESIGN SYSTEM & SUNSET MELANCHOLY TOKENS
+       美式酷辣 (American Baddie) + 夕陽暮色粉紫悲傷感 (Melancholic Sunset Glow)
+       ============================================================ */
+    :root {
+      --bg-dark: #08030e;
+      --bg-card: rgba(26, 12, 38, 0.6);
+      --bg-card-hover: rgba(43, 19, 62, 0.75);
+      
+      /* 夕陽暮色核心色系：暗夜紫、暮靄玫粉、殘陽落霞橘紅 */
+      --sunset-indigo: #1e0b36;
+      --sunset-violet: #86198f;
+      --sunset-purple: #c026d3;
+      --sunset-magenta: #e879f9;
+      --sunset-pink: #f43f5e;
+      --sunset-rose: #fda4af;
+      --sunset-amber: #fb923c;
+      
+      --accent-glow: rgba(232, 121, 249, 0.35);
+      --accent-glow-subtle: rgba(244, 63, 94, 0.18);
+      
+      --text-primary: #fff0f5;
+      --text-secondary: #e9d5ff;
+      --text-muted: #a855f7;
+      --text-dim: #70587f;
+      
+      --border-light: rgba(232, 121, 249, 0.22);
+      --border-glow: rgba(244, 63, 94, 0.45);
+      
+      --radius-sm: 10px;
+      --radius-md: 18px;
+      --radius-lg: 26px;
+      --radius-full: 9999px;
+      
+      --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.7;
+      overflow-x: hidden;
+      position: relative;
+      selection-background-color: var(--sunset-purple);
+      selection-color: #fff;
+    }
+
+    ::selection {
+      background: #c026d3;
+      color: #ffffff;
+    }
+
+    /* ============================================================
+       BACKGROUND: MELANCHOLIC SUNSET AURA & GRAIN
+       暮光沉浸式日落漸層光暈與微粒質感
+       ============================================================ */
+    .sunset-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: -2;
+      background: 
+        radial-gradient(circle at 15% 15%, rgba(134, 25, 143, 0.45) 0%, transparent 45%),
+        radial-gradient(circle at 85% 25%, rgba(244, 63, 94, 0.32) 0%, transparent 50%),
+        radial-gradient(circle at 50% 65%, rgba(192, 38, 211, 0.28) 0%, transparent 60%),
+        radial-gradient(circle at 20% 85%, rgba(251, 146, 60, 0.2) 0%, transparent 45%),
+        linear-gradient(180deg, #090212 0%, #150624 35%, #230833 70%, #0d0317 100%);
+      background-attachment: fixed;
+    }
+
+    /* 悲傷電影感暮光微塵／噪點膠卷濾鏡效果 */
+    .film-grain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* 浮動微光球 */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: -2;
+      animation: floatOrb 20s infinite alternate ease-in-out;
+    }
+
+    .orb-1 {
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(232, 121, 249, 0.25), transparent);
+      top: 10%;
+      right: 5%;
+      animation-duration: 18s;
+    }
+
+    .orb-2 {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(244, 63, 94, 0.18), transparent);
+      bottom: 15%;
+      left: 0%;
+      animation-duration: 24s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-30px, 40px) scale(1.08); }
+      100% { transform: translate(25px, -35px) scale(0.95); }
+    }
+
+    /* ============================================================
+       LAYOUT & CONTAINER
+       ============================================================ */
+    .wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ============================================================
+       NAVBAR (Glassmorphic Dusk Header)
+       ============================================================ */
+    .navbar {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 980px;
+      padding: 12px 24px;
+      background: rgba(22, 9, 33, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: 1px;
+    }
+
+    .nav-brand-dot {
+      width: 10px;
+      height: 10px;
+      background: linear-gradient(135deg, var(--sunset-purple), var(--sunset-pink));
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--sunset-pink);
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.6; }
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+      padding: 4px 6px;
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+      text-shadow: 0 0 10px var(--sunset-magenta);
+    }
+
+    .nav-cta {
+      background: linear-gradient(135deg, rgba(192, 38, 211, 0.8), rgba(244, 63, 94, 0.8));
+      color: #fff !important;
+      padding: 7px 18px !important;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      font-weight: 600 !important;
+      box-shadow: 0 4px 15px rgba(244, 63, 94, 0.35);
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 63, 94, 0.6);
+    }
+
+    /* ============================================================
+       HERO SECTION (美式酷辣 + 暮光孤傲感)
+       ============================================================ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 120px;
+      padding-bottom: 60px;
+      position: relative;
+    }
+
+    .hero-badge-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 18px;
+      background: rgba(74, 18, 92, 0.45);
+      border: 1px solid rgba(232, 121, 249, 0.3);
+      border-radius: var(--radius-full);
+      backdrop-filter: blur(10px);
+      width: fit-content;
+      margin-bottom: 24px;
+    }
+
+    .baddie-tag {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--sunset-rose);
+    }
+
+    .hero-title-group {
+      margin-bottom: 28px;
+    }
+
+    .hero-en-name {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 8vw, 6.2rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 10%, #f5d0fe 40%, #f43f5e 80%, #fb923c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: block;
+      margin-bottom: 8px;
+      text-shadow: 0 0 35px rgba(232, 121, 249, 0.3);
+    }
+
+    .hero-cn-name {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900;
+      letter-spacing: 4px;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .hero-cn-name::after {
+      content: '';
+      flex: 1;
+      max-width: 140px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--sunset-magenta), transparent);
+    }
+
+    /* 酷辣復仇霸氣座右銘卡片 */
+    .punchline-card {
+      position: relative;
+      background: linear-gradient(135deg, rgba(34, 13, 50, 0.75), rgba(48, 12, 42, 0.75));
+      border: 1px solid var(--border-glow);
+      border-radius: var(--radius-lg);
+      padding: 32px 36px;
+      margin: 20px 0 36px 0;
+      backdrop-filter: blur(25px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45), 
+                  0 0 30px rgba(192, 38, 211, 0.2),
+                  inset 0 1px 1px rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+    }
+
+    .punchline-card::before {
+      content: '"';
+      position: absolute;
+      top: -30px;
+      right: 25px;
+      font-family: 'Syne', serif;
+      font-size: 12rem;
+      font-weight: 800;
+      color: rgba(232, 121, 249, 0.08);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .punchline-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--sunset-rose);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .punchline-quote {
+      font-size: clamp(1.6rem, 3.8vw, 2.8rem);
+      font-weight: 900;
+      letter-spacing: 2px;
+      line-height: 1.3;
+      background: linear-gradient(110deg, #ffffff 20%, #fce7f3 40%, #e879f9 70%, #fda4af 95%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 4px 20px rgba(244, 63, 94, 0.25);
+    }
+
+    .punchline-desc {
+      margin-top: 14px;
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+      max-width: 650px;
+      font-weight: 300;
+      opacity: 0.9;
+    }
+
+    .hero-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      background: rgba(25, 9, 36, 0.5);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(15px);
+      transition: var(--transition);
+    }
+
+    .hero-meta-item:hover {
+      border-color: var(--sunset-magenta);
+      transform: translateY(-3px);
+      background: rgba(43, 17, 61, 0.65);
+    }
+
+    .meta-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, rgba(192, 38, 211, 0.3), rgba(244, 63, 94, 0.25));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--sunset-rose);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+    }
+
+    .meta-text-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-dim);
+    }
+
+    .meta-text-val {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* ============================================================
+       SECTION HEADINGS (美式雜誌風排版)
+       ============================================================ */
+    .section-wrap {
+      padding: 90px 0;
+      position: relative;
+    }
+
+    .section-head {
+      margin-bottom: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: var(--sunset-magenta);
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      line-height: 1.15;
+    }
+
+    .section-title span {
+      background: linear-gradient(135deg, var(--sunset-magenta), var(--sunset-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 620px;
+      font-weight: 300;
+    }
+
+    /* ============================================================
+       CHAMPION SPOTLIGHT CARD (拉拉舞比賽第一名 經歷)
+       ============================================================ */
+    .champion-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(38, 11, 54, 0.85) 0%, rgba(20, 7, 30, 0.95) 100%);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      padding: clamp(30px, 5vw, 48px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 
+                  0 0 45px rgba(217, 70, 239, 0.15),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 36px;
+      transition: var(--transition);
+    }
+
+    .champion-card:hover {
+      border-color: var(--sunset-magenta);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), 
+                  0 0 50px rgba(244, 63, 94, 0.3);
+    }
+
+    .champion-glow-beam {
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(244, 63, 94, 0.25), transparent 70%);
+      pointer-events: none;
+    }
+
+    .champion-badge-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.3), rgba(192, 38, 211, 0.3));
+      border: 1px solid rgba(253, 164, 175, 0.5);
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      color: #ffe4e6;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      margin-bottom: 20px;
+    }
+
+    .champion-title {
+      font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+
+    .champion-title mark {
+      background: transparent;
+      color: #fda4af;
+      border-bottom: 3px solid var(--sunset-pink);
+    }
+
+    .champion-story {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 24px;
+      font-weight: 350;
+    }
+
+    .champion-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .champ-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(232, 121, 249, 0.2);
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      color: var(--text-primary);
+    }
+
+    .trophy-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      background: linear-gradient(145deg, rgba(74, 14, 88, 0.5), rgba(30, 9, 44, 0.8));
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      border-radius: var(--radius-lg);
+      text-align: center;
+      min-width: 200px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    .trophy-icon {
+      width: 70px;
+      height: 70px;
+      color: #fda4af;
+      filter: drop-shadow(0 0 15px rgba(244, 63, 94, 0.6));
+      margin-bottom: 12px;
+      animation: floatTrophy 4s ease-in-out infinite;
+    }
+
+    @keyframes floatTrophy {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .trophy-rank {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .trophy-label {
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      font-weight: 800;
+      color: var(--sunset-magenta);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ============================================================
+       SKILLS & INVESTMENT AMBITIONS (擅長與想學的技能)
+       ============================================================ */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      backdrop-filter: blur(20px);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-glow);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(232, 121, 249, 0.2);
+    }
+
+    .skill-card-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sunset-rose);
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      margin-bottom: 20px;
+    }
+
+    .skill-head {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .skill-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, rgba(192, 38, 211, 0.3), rgba(244, 63, 94, 0.3));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      border: 1px solid rgba(232, 121, 249, 0.4);
+    }
+
+    .skill-card-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .skill-card-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .roadmap-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .roadmap-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+    }
+
+    .roadmap-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(192, 38, 211, 0.25);
+      border: 1px solid var(--sunset-magenta);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--sunset-magenta);
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-size: 11px;
+    }
+
+    /* 酷辣名言標籤條 */
+    .baddie-quote-strip {
+      margin-top: 40px;
+      padding: 24px 30px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(90deg, rgba(134, 25, 143, 0.35), rgba(244, 63, 94, 0.2));
+      border: 1px solid rgba(232, 121, 249, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .baddie-quote-text {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 1px;
+    }
+
+    .baddie-quote-sub {
+      color: var(--sunset-rose);
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+    }
+
+    /* ============================================================
+       INTERESTS SECTION (三個興趣：排球、籃球、中國古裝愛情劇)
+       ============================================================ */
+    .interests-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .interest-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 34px 28px;
+      backdrop-filter: blur(20px);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interest-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--sunset-purple), var(--sunset-pink));
+      opacity: 0.3;
+      transition: var(--transition);
+    }
+
+    .interest-card:hover {
+      background: var(--bg-card-hover);
+      transform: translateY(-8px);
+      border-color: rgba(244, 63, 94, 0.5);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(244, 63, 94, 0.25);
+    }
+
+    .interest-card:hover::before {
+      opacity: 1;
+      height: 6px;
+    }
+
+    .interest-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+
+    .interest-icon-circle {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(134, 25, 143, 0.4), rgba(244, 63, 94, 0.3));
+      border: 1px solid rgba(232, 121, 249, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fda4af;
+      font-size: 1.6rem;
+    }
+
+    .interest-tag {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--sunset-magenta);
+      text-transform: uppercase;
+      padding: 4px 10px;
+      background: rgba(192, 38, 211, 0.15);
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(192, 38, 211, 0.3);
+    }
+
+    .interest-title {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .interest-desc {
+      color: var(--text-secondary);
+      font-size: 0.96rem;
+      line-height: 1.75;
+      margin-bottom: 24px;
+      font-weight: 350;
+    }
+
+    .interest-vibe-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: var(--radius-sm);
+      border-left: 3px solid var(--sunset-pink);
+      font-size: 0.85rem;
+      color: var(--sunset-rose);
+      font-weight: 600;
+    }
+
+    /* 追劇專屬悲涼宿命暮色卡片微調 */
+    .drama-special {
+      background: linear-gradient(145deg, rgba(46, 12, 54, 0.75), rgba(24, 7, 36, 0.85));
+      border: 1px solid rgba(244, 63, 94, 0.35);
+    }
+
+    /* ============================================================
+       ABOUT & IDENTITY STATS (關於林宜蓁)
+       ============================================================ */
+    .about-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: clamp(30px, 5vw, 50px);
+      backdrop-filter: blur(25px);
+      position: relative;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .about-narrative h3 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+
+    .about-narrative p {
+      color: var(--text-secondary);
+      font-size: 1.02rem;
+      line-height: 1.85;
+      margin-bottom: 20px;
+      font-weight: 350;
+    }
+
+    .baddie-traits {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .trait-badge {
+      padding: 8px 18px;
+      background: linear-gradient(135deg, rgba(134, 25, 143, 0.3), rgba(244, 63, 94, 0.2));
+      border: 1px solid rgba(232, 121, 249, 0.3);
+      border-radius: var(--radius-full);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .about-stats-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .stat-row {
+      padding: 20px;
+      background: rgba(36, 12, 50, 0.5);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: var(--transition);
+    }
+
+    .stat-row:hover {
+      background: rgba(56, 18, 76, 0.6);
+      border-color: var(--sunset-magenta);
+      transform: translateX(6px);
+    }
+
+    .stat-row-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .stat-row-icon {
+      color: var(--sunset-pink);
+    }
+
+    .stat-row-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .stat-row-val {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+
+    /* ============================================================
+       FOOTER & CLOSING STATEMENT
+       ============================================================ */
+    .footer {
+      padding: 80px 0 50px 0;
+      border-top: 1px solid rgba(232, 121, 249, 0.15);
+      position: relative;
+      background: linear-gradient(180deg, transparent, rgba(10, 3, 16, 0.8));
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 24px;
+    }
+
+    .footer-huge-quote {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff, #f43f5e, #fb923c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      max-width: 800px;
+    }
+
+    .footer-sub {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+    }
+
+    .footer-signature {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-top: 20px;
+    }
+
+    .back-to-top-btn {
+      margin-top: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 24px;
+      background: rgba(38, 14, 52, 0.6);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-full);
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .back-to-top-btn:hover {
+      color: #ffffff;
+      border-color: var(--sunset-magenta);
+      background: rgba(74, 18, 92, 0.6);
+      box-shadow: 0 0 20px var(--accent-glow);
+      transform: translateY(-3px);
+    }
+
+    /* ============================================================
+       SCROLL REVEAL ANIMATIONS (捲動淡入動畫)
+       ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      filter: blur(6px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform, filter;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ============================================================
+       RESPONSIVE MEDIA QUERIES (手機與電腦完美適配)
+       ============================================================ */
+    @media (max-width: 900px) {
+      .champion-card {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .trophy-visual {
+        flex-direction: row;
+        gap: 20px;
+        min-width: unset;
+        width: 100%;
+        padding: 20px;
+      }
+
+      .trophy-icon {
+        margin-bottom: 0;
+        width: 50px;
+        height: 50px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 10px 18px;
+      }
+
+      .nav-links a:not(.nav-cta) {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 100px;
+      }
+
+      .punchline-card {
+        padding: 24px 20px;
+      }
+
+      .hero-cn-name::after {
+        display: none;
+      }
+
+      .section-wrap {
+        padding: 60px 0;
+      }
+
+      .baddie-quote-strip {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 沉浸式暮色日落背景與微粒噪點 -->
+  <div class="sunset-backdrop"></div>
+  <div class="film-grain"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- 頂部導航欄 (Sunset Glass Navbar) -->
+  <header class="navbar">
+    <a href="#" class="nav-brand">
+      <span class="nav-brand-dot"></span>
+      YI-CHEN LIN
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">關於我</a></li>
+      <li><a href="#achievement">獲獎榮耀</a></li>
+      <li><a href="#skills">未來目標</a></li>
+      <li><a href="#interests">日常熱愛</a></li>
+      <li><a href="#punchline" class="nav-cta">走著瞧 ⚡</a></li>
+    </ul>
+  </header>
+
+  <main class="wrapper">
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="hero" id="hero">
+      <div class="reveal">
+        <div class="hero-badge-wrap">
+          <i data-lucide="sparkles" style="width: 15px; height: 15px; color: #fda4af;"></i>
+          <span class="baddie-tag">BADDIE ENERGY // SUNSET VIBE</span>
+        </div>
+      </div>
+
+      <div class="hero-title-group reveal reveal-delay-1">
+        <span class="hero-en-name">LIN YI-CHEN</span>
+        <h1 class="hero-cn-name">林 宜 蓁</h1>
+      </div>
+
+      <!-- 核心霸氣座右銘 (美式酷辣標誌卡片) -->
+      <div class="punchline-card reveal reveal-delay-2" id="punchline">
+        <div class="punchline-label">
+          <i data-lucide="flame" style="width: 16px; height: 16px;"></i>
+          <span>MOTTO & ATTITUDE</span>
+        </div>
+        <div class="punchline-quote">
+          「以後那些人給我走著瞧。」
+        </div>
+        <p class="punchline-desc">
+          不在乎質疑，不浪費時間解釋。所有的隱忍與汗水，都將在夕陽落盡後的黎明，化為無可反駁的鋒芒。
+        </p>
+      </div>
+
+      <!-- 快捷特色標籤卡 -->
+      <div class="hero-meta-grid reveal reveal-delay-3">
+        <div class="hero-meta-item">
+          <div class="meta-icon-box">
+            <i data-lucide="trophy" style="width: 22px; height: 22px;"></i>
+          </div>
+          <div>
+            <div class="meta-text-title">Leadership</div>
+            <div class="meta-text-val">全校拉拉舞 第一名</div>
+          </div>
+        </div>
+
+        <div class="hero-meta-item">
+          <div class="meta-icon-box">
+            <i data-lucide="trending-up" style="width: 22px; height: 22px;"></i>
+          </div>
+          <div>
+            <div class="meta-text-title">Focus Target</div>
+            <div class="meta-text-val">投資理財 ＆ 股票修煉</div>
+          </div>
+        </div>
+
+        <div class="hero-meta-item">
+          <div class="meta-icon-box">
+            <i data-lucide="heart" style="width: 22px; height: 22px;"></i>
+          </div>
+          <div>
+            <div class="meta-text-title">Soul & Passion</div>
+            <div class="meta-text-val">球場熱血 ＆ 古裝虐戀</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ABOUT SECTION ==================== -->
+    <section class="section-wrap" id="about">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">
+          <i data-lucide="user" style="width: 16px; height: 16px;"></i>
+          PERSONAL PROFILE
+        </div>
+        <h2 class="section-title">酷辣有骨氣，<span>溫柔藏深處</span></h2>
+        <p class="section-subtitle">
+          美式大膽自信的靈魂，混搭夕陽般深沉沉靜的思緒。外表是不容小覷的強者姿態，內心有對勝負的執念與極致的浪漫。
+        </p>
+      </div>
+
+      <div class="about-box reveal reveal-delay-1">
+        <div class="about-grid">
+          <div class="about-narrative">
+            <h3>我是林宜蓁，不定義規則，我定義自己。</h3>
+            <p>
+              有人習慣安分守己，但我天生渴望掌控全局。不論是帶領隊伍在舞台上奪冠，還是在球場上爭奪每一次得分，我享受汗水、享受壓力，更享受最後站在最高處時的從容。
+            </p>
+            <p>
+              夕陽的暮紫帶著一點微澀的悲傷，那不是示弱，而是看透現實後依然全力以赴的冷冽與清醒。
+            </p>
+            <div class="baddie-traits">
+              <span class="trait-badge"><i data-lucide="zap" style="width: 14px; height: 14px;"></i> 自信霸氣</span>
+              <span class="trait-badge"><i data-lucide="award" style="width: 14px; height: 14px;"></i> 冠軍隊長</span>
+              <span class="trait-badge"><i data-lucide="activity" style="width: 14px; height: 14px;"></i> 運動魂魄</span>
+              <span class="trait-badge"><i data-lucide="dollar-sign" style="width: 14px; height: 14px;"></i> 財商野心</span>
+            </div>
+          </div>
+
+          <div class="about-stats-panel">
+            <div class="stat-row">
+              <div class="stat-row-left">
+                <i data-lucide="compass" class="stat-row-icon" style="width: 20px; height: 20px;"></i>
+                <span class="stat-row-label">風格定位</span>
+              </div>
+              <span class="stat-row-val">美式酷辣 (American Baddie)</span>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-row-left">
+                <i data-lucide="palette" class="stat-row-icon" style="width: 20px; height: 20px;"></i>
+                <span class="stat-row-label">靈魂代表色</span>
+              </div>
+              <span class="stat-row-val" style="color: #e879f9;">暮色暖紫 (Sunset Purple)</span>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-row-left">
+                <i data-lucide="shield-check" class="stat-row-icon" style="width: 20px; height: 20px;"></i>
+                <span class="stat-row-label">處事哲學</span>
+              </div>
+              <span class="stat-row-val">實力說話，頂峰相見</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ACHIEVEMENT SECTION ==================== -->
+    <section class="section-wrap" id="achievement">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">
+          <i data-lucide="crown" style="width: 16px; height: 16px;"></i>
+          LEADERSHIP & WORK
+        </div>
+        <h2 class="section-title">全校拉拉舞競賽 <span>第一名奪冠</span></h2>
+        <p class="section-subtitle">
+          身為領袖，不只是站在最前方喊口號，而是將全班的向心力與節奏凝聚成無可撼動的壓倒性勝利。
+        </p>
+      </div>
+
+      <div class="champion-card reveal reveal-delay-1">
+        <div class="champion-glow-beam"></div>
+        <div>
+          <div class="champion-badge-top">
+            <i data-lucide="medal" style="width: 16px; height: 16px;"></i>
+            全校體育盛事 // 榮譽第一
+          </div>
+          <h3 class="champion-title">
+            我帶領班級參加了全校拉拉舞比賽，<mark>得了第一名</mark>。
+          </h3>
+          <p class="champion-story">
+            從編排舞步、隊形轉換到每一次放學後的魔鬼訓練，面對疲憊、分歧與旁人的觀望，我扛起統籌大任。我們用整齊劃一的爆發力與最抓人眼球的酷颯氣場，在決賽賽場上震撼全場評審，毫無爭議奪下最高榮耀冠軍獎盃！
+          </p>
+          <div class="champion-pills">
+            <span class="champ-pill"><i data-lucide="users" style="width: 14px; height: 14px; color: #fda4af;"></i> 班級總指揮與領隊</span>
+            <span class="champ-pill"><i data-lucide="music" style="width: 14px; height: 14px; color: #fda4af;"></i> 舞蹈隊形設計與節奏掌握</span>
+            <span class="champ-pill"><i data-lucide="check-circle" style="width: 14px; height: 14px; color: #fda4af;"></i> 團隊凝聚與臨場抗壓</span>
+          </div>
+        </div>
+
+        <div class="trophy-visual">
+          <i data-lucide="trophy" class="trophy-icon"></i>
+          <div class="trophy-rank">#1</div>
+          <div class="trophy-label">CHAMPION</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SKILLS & INVESTMENT ==================== -->
+    <section class="section-wrap" id="skills">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">
+          <i data-lucide="target" style="width: 16px; height: 16px;"></i>
+          GROWTH & AMBITION
+        </div>
+        <h2 class="section-title">我的野心：<span>投資理財與股票實戰</span></h2>
+        <p class="section-subtitle">
+          「以後那些人給我走著瞧」不只是氣話，更需要真金白銀的實力支撐。我立志掌握金錢的規律，打造屬於自己的資本護城河。
+        </p>
+      </div>
+
+      <div class="skills-grid">
+        <!-- 技能卡片 1 -->
+        <div class="skill-card reveal reveal-delay-1">
+          <span class="skill-card-badge">IN PROGRESS</span>
+          <div class="skill-head">
+            <div class="skill-icon-wrap">
+              <i data-lucide="candlestick-chart" style="width: 26px; height: 26px;"></i>
+            </div>
+            <div>
+              <h3 class="skill-card-title">股票市場策略</h3>
+              <span style="font-size: 0.8rem; color: var(--text-dim);">Stock Market Trading</span>
+            </div>
+          </div>
+          <p class="skill-card-desc">
+            學習K線型態、均線趨勢與籌碼流向。不隨波逐流當韭菜，培養獨立判斷力與買賣紀律，掌握每一波起伏的獲利契機。
+          </p>
+          <ul class="roadmap-list">
+            <li class="roadmap-item">
+              <span class="roadmap-check">✓</span>
+              <span>技術分析：趨勢線、支撐壓力與成交量</span>
+            </li>
+            <li class="roadmap-item">
+              <span class="roadmap-check">✓</span>
+              <span>籌碼研究：法人動向與主力進出追蹤</span>
+            </li>
+            <li class="roadmap-item">
+              <span class="roadmap-check">✓</span>
+              <span>心態修煉：停損停利果斷、克服貪婪恐懼</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 技能卡片 2 -->
+        <div class="skill-card reveal reveal-delay-2">
+          <span class="skill-card-badge">CORE VISION</span>
+          <div class="skill-head">
+            <div class="skill-icon-wrap">
+              <i data-lucide="piggy-bank" style="width: 26px; height: 26px;"></i>
+            </div>
+            <div>
+              <h3 class="skill-card-title">資產配置與財富思維</h3>
+              <span style="font-size: 0.8rem; color: var(--text-dim);">Financial Independence</span>
+            </div>
+          </div>
+          <p class="skill-card-desc">
+            建立長遠的複利思維與現金流架構。讓資金替自己全天候工作，累積隨時能向不喜歡的人事物說「不」的底氣與自由。
+          </p>
+          <ul class="roadmap-list">
+            <li class="roadmap-item">
+              <span class="roadmap-check">✓</span>
+              <span>總體經濟解讀：通膨、利率與景氣循環</span>
+            </li>
+            <li class="roadmap-item">
+              <span class="roadmap-check">✓</span>
+              <span>ETF 指數化投資與長期資產穩健增值</span>
+            </li>
+            <li class="roadmap-item">
+              <span class="roadmap-check">✓</span>
+              <span>打造被動收入系統，邁向全面財務自由</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="baddie-quote-strip reveal reveal-delay-3">
+        <div class="baddie-quote-text">
+          ⚡「美麗是外表，野心是骨架，而資產才是最硬核的底氣。」
+        </div>
+        <div class="baddie-quote-sub">
+          FINANCIAL INDEPENDENCE // 2026 ROADMAP
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== INTERESTS SECTION ==================== -->
+    <section class="section-wrap" id="interests">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">
+          <i data-lucide="smile" style="width: 16px; height: 16px;"></i>
+          HOBBIES & LIFESTYLE
+        </div>
+        <h2 class="section-title">熱血揮灑與<span>暮色深情</span></h2>
+        <p class="section-subtitle">
+          白天在球場上盡情燃燒奔馳，黃昏與深夜則沉浸在宿命虐戀的浪漫詩意裡。
+        </p>
+      </div>
+
+      <div class="interests-grid">
+        <!-- 興趣 1：打排球 -->
+        <div class="interest-card reveal reveal-delay-1">
+          <div>
+            <div class="interest-header">
+              <div class="interest-icon-circle">
+                🏐
+              </div>
+              <span class="interest-tag">POWER & REFLEX</span>
+            </div>
+            <h3 class="interest-title">打排球 Volleyball</h3>
+            <p class="interest-desc">
+              享受球不落地的堅韌執著。飛身救球、精準托球、再由前排一記強力扣殺得分！在球場上，我和隊友的每一次擊掌，都是最純粹的默契與戰意。
+            </p>
+          </div>
+          <div class="interest-vibe-pill">
+            <i data-lucide="zap" style="width: 16px; height: 16px;"></i>
+            <span>關鍵字：扣殺力道、團隊防守、永不放棄</span>
+          </div>
+        </div>
+
+        <!-- 興趣 2：打籃球 -->
+        <div class="interest-card reveal reveal-delay-2">
+          <div>
+            <div class="interest-header">
+              <div class="interest-icon-circle">
+                🏀
+              </div>
+              <span class="interest-tag">SPEED & AGILITY</span>
+            </div>
+            <h3 class="interest-title">打籃球 Basketball</h3>
+            <p class="interest-desc">
+              運球過人的節奏變幻、急停跳投的清脆擦網聲。街頭風格十足的競技對抗，讓我隨時保持敏捷身手與毫不退讓的防守壓迫感。
+            </p>
+          </div>
+          <div class="interest-vibe-pill">
+            <i data-lucide="flame" style="width: 16px; height: 16px;"></i>
+            <span>關鍵字：突破撕裂、精準投射、美式街頭感</span>
+          </div>
+        </div>
+
+        <!-- 興趣 3：追劇(中國古裝愛情劇) -->
+        <div class="interest-card drama-special reveal reveal-delay-3">
+          <div>
+            <div class="interest-header">
+              <div class="interest-icon-circle" style="background: linear-gradient(135deg, rgba(244, 63, 94, 0.4), rgba(251, 146, 60, 0.3));">
+                📜
+              </div>
+              <span class="interest-tag" style="color: #fda4af; border-color: rgba(244, 63, 94, 0.4);">ROMANCE & NOSTALGIA</span>
+            </div>
+            <h3 class="interest-title">追劇・中國古裝愛情劇</h3>
+            <p class="interest-desc">
+              偏愛那些帶著宿命羈絆與極致悲歡的虐戀情節。殘陽如血、暮色沉淪，看主角在權謀與深情中掙扎抉擇，體會那種微酸而悲涼的東方浪漫。
+            </p>
+          </div>
+          <div class="interest-vibe-pill" style="border-left-color: #fb923c; color: #fdba74;">
+            <i data-lucide="moon" style="width: 16px; height: 16px;"></i>
+            <span>關鍵字：宿命深情、夕陽暮色、唯美悲劇美學</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+      <div class="footer-content reveal">
+        <div class="footer-huge-quote">
+          SEE YOU AT THE TOP.
+        </div>
+        <p class="footer-sub">
+          「把所有的冷眼旁觀，都化作頂峰相見時的掌聲。」
+        </p>
+        <a href="#hero" class="back-to-top-btn">
+          <i data-lucide="arrow-up" style="width: 16px; height: 16px;"></i>
+          返回頂部 TOP
+        </a>
+        <div class="footer-signature">
+          © 2026 LIN YI-CHEN (林宜蓁). All Rights Reserved. Designed with American Baddie & Sunset Melancholy Vibe.
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    // 初始化 Lucide 圖標
+    lucide.createIcons();
+
+    // 捲動淡入動畫 (Scroll Reveal with IntersectionObserver)
+    document.addEventListener("DOMContentLoaded", () => {
+      const reveals = document.querySelectorAll(".reveal");
+
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            // 可選擇是否取消監聽以保留一次性入場，或持續監聽
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        root: null,
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
+      });
+
+      reveals.forEach(el => revealObserver.observe(el));
+    });
+
+    // 點擊平滑捲動增強
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          targetEl.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
